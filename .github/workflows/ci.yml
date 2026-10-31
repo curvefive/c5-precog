@@ -5,9 +5,20 @@ jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
-      matrix: { node: [20, 22] }
+      matrix: { node: [20, 22, 24] }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: "${{ matrix.node }}" }
+      - run: node --check public/app.js   # front end has no tests; at least catch syntax errors
       - run: npm test
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t c5-precog .
+      - name: smoke test
+        run: |
+          docker run -d --name p -p 8080:8080 -e DEMO=1 --read-only --cap-drop ALL c5-precog
+          for i in $(seq 1 20); do curl -fs localhost:8080/healthz && break; sleep 1; done
+          curl -fs localhost:8080/api/state | grep -q '"demo":true'
