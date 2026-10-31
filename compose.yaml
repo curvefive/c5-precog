@@ -1,0 +1,13 @@
+services:
+  precog:
+    build: .
+    container_name: c5-precog
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "8080:8080"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    # volumes:   # for PROXMOX_CA_FILE=/certs/pve-root-ca.pem
+    #   - ./pve-root-ca.pem:/certs/pve-root-ca.pem:ro

@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Precog · CurveFive</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="crt" aria-hidden="true"></div>
+<div class="boot" id="boot" aria-hidden="true"><pre id="bootlog"></pre></div>
+<div class="scrim" id="scrim" hidden></div>
+
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 40 40" class="mark" aria-hidden="true"><circle cx="20" cy="20" r="17"/><circle cx="20" cy="20" r="9"/><circle cx="20" cy="20" r="2.5" class="dot"/><path d="M20 3v8M20 29v8M3 20h8M29 20h8"/></svg>
+    <h1 data-text="PRECOG">PRECOG</h1><p>// curvefive homelab sight</p>
+  </div>
+  <label class="search"><span class="prompt" aria-hidden="true">&gt;</span><span class="sr">Search devices</span><input id="q" type="search" placeholder="grep device, ip, mac, vendor  [/]" autocomplete="off" spellcheck="false"></label>
+  <div class="sources" id="sources" aria-live="polite"></div>
+  <time id="clock" class="clock"></time>
+</header>
+
+<main class="deck">
+  <section class="panel dns" aria-labelledby="dns-h">
+    <h2 id="dns-h"><span class="ix">01</span>DNS_SHIELD<button class="max-btn" aria-label="Expand DNS shield">⤢</button></h2>
+    <div class="body">
+      <div class="bignum"><span id="pct">–</span><small>% of lookups<br>stopped today</small></div>
+      <dl class="kv" id="dnskv"></dl>
+      <svg id="hist" class="hist" viewBox="0 0 300 90" preserveAspectRatio="none" role="img" aria-label="Queries over the last 24 hours"></svg>
+      <div class="legend"><i class="sw a"></i>allowed <i class="sw b"></i>blocked <span id="histspan"></span></div>
+      <h3>most_blocked</h3>
+      <ol class="bars" id="blocked"></ol>
+    </div>
+  </section>
+
+  <section class="panel live" aria-labelledby="live-h">
+    <h2 id="live-h"><span class="ix">02</span>LIVE_TAP<button id="pause" class="ghost" aria-pressed="false">pause</button><button class="max-btn" aria-label="Expand live lookups">⤢</button></h2>
+    <div class="body"><ol class="stream" id="stream" aria-live="off"></ol></div>
+  </section>
+
+  <section class="panel pool" aria-labelledby="pool-h">
+    <h2 id="pool-h"><span class="ix">03</span>CONSTELLATION
+      <span class="views" role="group" aria-label="View"><button id="v-map" aria-pressed="true">map</button><button id="v-list" aria-pressed="false">list <span id="devcount"></span></button></span>
+      <button class="max-btn" aria-label="Expand constellation">⤢</button></h2>
+    <div class="kinds" id="kinds" role="group" aria-label="Filter by device type"></div>
+    <div class="stage">
+      <svg id="map" viewBox="0 0 1000 1000" role="img" aria-label="Every device on the network arranged around the DNS core. Scroll to zoom, drag to pan."></svg>
+      <div class="tablewrap" id="list" hidden>
+        <table id="devtable">
+          <thead><tr>
+            <th data-k="name" scope="col">device</th><th data-k="kind" scope="col">type</th><th data-k="ip" scope="col">address</th>
+            <th data-k="vendor" scope="col">maker</th><th data-k="queries24h" scope="col" class="num">lookups_24h</th><th data-k="lastSeen" scope="col">last_seen</th><th data-k="where" scope="col">lives_on</th>
+          </tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="zoom" id="zoomui">
+        <button id="z-in" aria-label="Zoom in">+</button><button id="z-out" aria-label="Zoom out">−</button><button id="z-reset" aria-label="Reset view">⌖</button>
+        <span id="zread">1.0x</span>
+      </div>
+      <aside class="inspector" id="inspector" hidden aria-labelledby="ins-h"></aside>
+      <div class="tip" id="tip" hidden></div>
+    </div>
+    <p class="poolnote" id="poolnote"></p>
+  </section>
+
+  <section class="panel pve" aria-labelledby="pve-h">
+    <h2 id="pve-h"><span class="ix">04</span>PROXMOX<button class="max-btn" aria-label="Expand Proxmox">⤢</button></h2>
+    <div class="body" id="pve"></div>
+  </section>
+
+  <section class="panel al" aria-labelledby="al-h">
+    <h2 id="al-h"><span class="ix">05</span>FORESIGHT <span class="count" id="alcount"></span><button class="max-btn" aria-label="Expand Foresight">⤢</button></h2>
+    <div class="body"><ul class="alerts" id="alerts"></ul></div>
+  </section>
+</main>
+
+<footer class="foot"><span id="foot"></span><span class="keys">[/] search · [+/−] zoom · [0] reset · [esc] back</span><a href="https://github.com/curvefive/c5-precog" rel="noopener">c5-precog</a></footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "c5-precog",
+  "version": "0.1.0",
+  "description": "CurveFive Precog: a read-only, zero-dependency holographic dashboard for your homelab (Pi-hole v6 + Proxmox VE).",
+  "type": "module",
+  "main": "server.js",
+  "bin": { "c5-precog": "server.js" },
+  "scripts": { "start": "node server.js", "demo": "DEMO=1 node server.js", "test": "node --test" },
+  "engines": { "node": ">=20.6" },
+  "license": "MIT",
+  "keywords": ["homelab", "pihole", "proxmox", "dashboard", "network", "self-hosted"]
+}
