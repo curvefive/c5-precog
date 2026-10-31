@@ -19,6 +19,6 @@ jobs:
       - run: docker build -t c5-precog .
       - name: smoke test
         run: |
-          docker run -d --name p -p 8080:8080 -e DEMO=1 --read-only --cap-drop ALL c5-precog
+          docker run -d --name precog -p 8080:8080 -e DEMO=1 --read-only --cap-drop ALL c5-precog
           for i in $(seq 1 20); do curl -fs localhost:8080/healthz && break; sleep 1; done
           curl -fs localhost:8080/api/state | grep -q '"demo":true'
